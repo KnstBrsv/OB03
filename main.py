@@ -1,52 +1,66 @@
-from animal import Animal
-from employee import ZooKeeper, Veterinarian
-from reptile import Reptile
-from mammal import Mammal
-from bird import Bird
 from zoo import Zoo
 
-# animals = []
-# animals.append(Mammal("Тигр", 5, "Белый", True, "рычит", "мясо"))
-# animals.append(Bird("Утка", 2, "Серый", True, True, "крякает", "зерно"))
-# animals.append(Reptile("Лягушка", 1, "Зеленый", True, "квакает", "комаров"))
-
-
+# Функция для звуков животных
 def animal_sound(animals):
     for animal in animals:
         animal.make_sound()
 
+# Функция для еды животных
 def animal_eat(animals):
     for animal in animals:
         animal.eat()
 
+# Функция для плавания животных
 def animal_swim(animals):
     for animal in animals:
         animal.swim()
 
+# Функция для полёта животных
 def animal_fly(animals):
     for animal in animals:
         animal.fly()
 
-# animal_sound(animals)
-# animal_eat(animals)
-# animal_swim(animals)
-# animal_fly(animals)
+# Создаем зоопарк
+zoo = Zoo("Большой Зоопарк", "Главная улица, 1")
 
-# emp1 = ZooKeeper("Иван",  25)
-# print(emp1)
-# emp1.feed_animal(animals[0])
-#
-# emp2 = Veterinarian("Петр", 30)
-# print(emp2)
-# emp2.treat_animal(animals[1])
+# Нанимаем сотрудников
+zoo.hire_zookeeper("Иван", 35)
+zoo.hire_zookeeper("Ольга", 30)
+zoo.hire_veterinarian("Анна", 29)
 
-zoo1 = Zoo("Зоопарк", "Москва")
-zoo1.hire_employee("Иван", 25, "смотритель зоопарка")
-zoo1.hire_employee("Петр", 30, "ветеринар")
-zoo1.add_animal(Mammal("Тигр", 5, "Белый", True, "рычит", "мясо"))
-zoo1.add_animal(Bird("Утка", 2, "Серый", True, True, "крякает", "зерно"))
-zoo1.add_animal(Reptile("Лягушка", 1, "Зеленый", True, "квакает", "комаров"))
-zoo1.employees[0].feed_animal(zoo1.animals[0])
-zoo1.employees[1].treat_animal(zoo1.animals[1])
-zoo1.remove_animal("Лягушка")
-zoo1.remove_animal("Утка")
+# Увольняем одного сотрудника (удаляем по имени)
+employee_to_remove = zoo.employees[1]  # Ольга
+zoo.employees.remove(employee_to_remove)
+print(f"Сотрудник {employee_to_remove.name} уволен.")
+
+# Добавляем животных
+zoo.add_bird("Попугай", 2, "зеленый", can_fly=True, can_swim=False, sound="чирикает", food="семена")
+zoo.add_mammal("Лев", 5, "желтый", can_swim=False, sound="рычит", food="мясо")
+zoo.add_reptile("Крокодил", 7, "зеленый", can_swim=True, sound="шипит", food="рыбу")
+zoo.add_bird("Орёл", 4, "коричневый", can_fly=True, can_swim=False, sound="каркает", food="мясо")
+
+# Удаляем одно животное (по имени)
+zoo.remove_animal("Орёл")
+
+# Животные издают звуки
+animal_sound(zoo.animals)
+
+# Животные едят
+animal_eat(zoo.animals)
+
+# Животные плавают
+animal_swim(zoo.animals)
+
+# Животные летают
+animal_fly(zoo.animals)
+
+# Смотритель кормит всех животных
+zookeeper = zoo.employees[0]  # Иван - смотритель
+for animal in zoo.animals:
+    zookeeper.feed_animal(animal)
+
+# Ветеринар лечит всех животных
+veterinarian = zoo.employees[1]  # Анна - ветеринар
+for animal in zoo.animals:
+    veterinarian.treat_animal(animal)
+
